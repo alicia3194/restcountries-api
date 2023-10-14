@@ -1,23 +1,36 @@
-const cardTemplate = function (/* You can pass the data here*/) {
-  return `<div class="card">
-              <img id="flag-image" src="ADD THE IMAGE LINK HERE" alt="flag" />
-              <h1 class="center">ADD COUNTRY NAME HERE</h1>
-            </div>`;
+// const cardTemplate = function (/* You can pass the data here*/) {
+//   return `<div class="card">
+//               <img id="flag-image" src="ADD THE IMAGE LINK HERE" alt="flag" />
+//               <h1 class="center">ADD COUNTRY NAME HERE</h1>
+//             </div>`;
+// };
+
+function apiCountries() {
+  fetch("https://restcountries.com/v3.1/all")
+    .then((resp) => resp.json())
+    .then((data) => {
+      allContinents(data);
+    })
+    .catch((error) => {
+      console.error("Ocurrió un error al obtener los datos:", error);
+    });
+}
+// todos los continentes
+
+const allContinents = (countries) => {
+  console.log(countries);
+  const countriesHTML = countries.map((country) => cardTemplate(country));
+  const container = document.getElementById("countries");
+  container.innerHTML = countriesHTML.join(" ");
 };
 
-const countriesNode = document.getElementById("countries");
+const cardTemplate = (country) => {
+  console.log(country);
+  return `<div class="card">
+  <h1 class="center">${country.name.common}</h1>
+  <img id="flag-image" src="${country.flags.png}" alt="flag" />
+</div>
+`;
+};
 
-fetch(/* Need the provide API URL to get all countries */)
-  .then(function (response) {
-    // fetch() returns a promise containing the response (a Response object).
-    // This is just an HTTP response, not the actual JSON. 
-    // To extract the JSON body content from the response, 
-    // we use the json() method and pass it into the next .then()
-  })
-  .then(function (countries) {
-    // Here is where you'll need to add into the DOM all the countries received from API 
-
-    // 1 - We will need to iterate the countries variable with a loop
-    // 2 - You can use the cardTemplate() function to create a div with a class card already styled
-    // 💡 you can use countriesNode variable to add elements
-  });
+apiCountries();
