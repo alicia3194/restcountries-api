@@ -18,16 +18,14 @@ function apiCountries() {
 // todos los continentes
 
 const allContinents = (countries) => {
-  console.log(countries);
   const countriesHTML = countries.map((country) => cardTemplate(country));
   const container = document.getElementById("countries");
   container.innerHTML = countriesHTML.join(" ");
 };
 
 const cardTemplate = (country) => {
-  console.log(country);
   return `<div class="card">
-  <h1 class="center">${country.name.common}</h1>
+  <h1 class="center">${country.name.official}</h1>
   <img id="flag-image" src="${country.flags.png}" alt="flag" />
 </div>
 `;
